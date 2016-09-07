@@ -1,0 +1,595 @@
+<!doctype html>
+<html>
+<head>
+<title>Test API</title>
+<meta charset="utf-8" />
+</head>
+<body>
+	<section>
+		<a href="http://localhost:8080/auth/googleplus">Google+</a>
+		<a href="http://localhost:8080/auth/facebook">Facebook</a>
+		<a href="http://localhost:8080/auth/twitter">Twitter</a>
+	</section>
+	<h2>Local login</h2>
+	<form id="login" method="POST" action="http://localhost:8080/auth/local">
+		<input id="username" name="username" type="text" placeholder="username" />
+		<input id="password" name="password" type="text" placeholder="password" />
+		<button type="submit">Login</button>
+	</form>
+	<section>
+		<h2>Create Users</h2>
+		<form>
+			<h3>
+				<span>/api/users</span>
+				<button type="button" onclick="usersPost()">POST</button>
+			</h3>
+			<table>
+				<tr>
+					<th>username</th>
+					<td>
+						<input id="users-username" type="text" />
+					</td>
+				</tr>
+				<tr>
+					<th>password</th>
+					<td>
+						<input id="users-password" type="text" />
+					</td>
+				</tr>
+				<tr>
+					<th>email</th>
+					<td>
+						<input id="users-email" type="text" />
+					</td>
+				</tr>
+			</table>
+			<h4>response</h4>
+			<code id="usersStatus"></code>
+			<code id="usersResponse"></code>
+		</form>
+	</section>
+	<section>
+		<h2>Verify Email</h2>
+		<form>
+			<h3>
+				<span>/api/users/:username/email/:uuid</span>
+				<button type="button" onclick="emailVerificationGet()">GET</button>
+			</h3>
+			<table>
+				<tr>
+					<th>username</th>
+					<td>
+						<input id="email-validation-username" type="text" />
+					</td>
+				</tr>
+				<tr>
+					<th>uuid</th>
+					<td>
+						<input id="email-validation-uuid" type="text" />
+					</td>
+				</tr>
+			</table>
+			<h4>response</h4>
+			<code id="email-validation-status"></code>
+			<code id="email-validation-response"></code>
+		</form>
+	</section>
+	<section>
+		<h2>Verify Email again</h2>
+		<form>
+			<h3>
+				<span>/:username/email/reverify</span>
+				<button type="button" onclick="emailReVerificationPut()">PUT</button>
+			</h3>
+			<table>
+				<tr>
+					<th>username</th>
+					<td>
+						<input id="email-revalidation-username" type="text" />
+					</td>
+				</tr>
+				<tr>
+					<th>email</th>
+					<td>
+						<input id="email-revalidation-email" type="text" />
+					</td>
+				</tr>
+				<tr>
+					<th>uuid</th>
+					<td>
+						<input id="email-revalidation-uuid" type="text" />
+					</td>
+				</tr>
+			</table>
+			<h4>response</h4>
+			<code id="email-revalidation-status"></code>
+			<code id="email-revalidation-response"></code>
+		</form>
+	</section>
+	<section>
+		<h2>Change Status</h2>
+		<form>
+			<h3>
+				<span>/api/users/</span><input id="userStatus-username" type="type" /><span>/status/</span>
+				<input id="userStatus-status" type="text">
+				<button type="button" onclick="userStatusPUT()">PUT</button>
+			</h3>
+			<h4>response</h4>
+			<code id="userStatusStatus"></code>
+			<code id="userStatusResponse"></code>
+		</form>
+	</section>
+	<section>
+		<h2>Update Password</h2>
+		<form>
+			<h3>
+				<span>/api/users/me/password</span>
+				<button type="button" onclick="userPasswordPUT()">PUT</button>
+			</h3>
+			<table>
+				<tr>
+					<th>new password</th>
+					<td>
+						<input id="userPassword-newPassword" type="text" />
+					</td>
+				</tr>
+			</table>
+			<h4>response</h4>
+			<code id="userPasswordStatus"></code>
+			<code id="userPasswordResponse"></code>
+		</form>
+	</section>
+	<section>
+		<h2>Coins</h2>
+		<form>
+			<h3>
+				<span>/api/users/me/coins</span>
+				<button type="button" onclick="coins()">GET</button>
+			</h3>
+			<h4>response</h4>
+			<code id="coinsStatus"></code>
+			<code id="coinsResponse"></code>
+		</form>
+	</section>
+	<section>
+		<h2>Packages</h2>
+		<form>
+			<h3>
+				<span>/api/users/me/packages</span>
+				<button type="button" onclick="paquetes()">GET</button>
+			</h3>
+			<h4>response</h4>
+			<code id="paquetesStatus"></code>
+			<code id="paquetesResponse"></code>
+		</form>
+	</section>
+	<section>
+		<h2>Package</h2>
+		<form>
+			<h3>
+				<span>/api/users/me/packages/:packageId</span>
+				<button type="button" onclick="paquete()">GET</button>
+			</h3>
+			<table>
+				<tr>
+					<th>packageId</th>
+					<td>
+						<input id="paquete-id" type="text" />
+					</td>
+				</tr>
+			</table>
+			<h4>response</h4>
+			<code id="paqueteStatus"></code>
+			<code id="paqueteResponse"></code>
+		</form>
+	</section>	
+	<section>
+		<h2>Bids</h2>
+		<form>
+			<h3>
+				<span>/api/users/me/auctions/:auctionId/bids</span>
+				<button type="button" onclick="postBids()">POST</button>
+			</h3>
+			<table>
+				<tr>
+					<th>auctionId</th>
+					<td>
+						<input id="postBids-auctionId" type="text" />
+					</td>
+				</tr>
+				<tr>
+					<th>amount</th>
+					<td>
+						<input id="postBids-amount" type="text" />
+					</td>
+				</tr>
+			</table>
+			<h4>response</h4>
+			<code id="postBidsStatus"></code>
+			<code id="postBidsResponse"></code>
+		</form>
+	</section>
+	<section>
+		<h2>Bids</h2>
+		<form>
+			<h3>
+				<span>/api/users/me/auctions/:auctionId/bids?start=1&end=11</span>
+				<button type="button" onclick="bids()">GET</button>
+			</h3>
+			<table>
+				<tr>
+					<th>auctionId</th>
+					<td>
+						<input id="bids-auctionId" type="text" />
+					</td>
+				</tr>
+				<tr>
+					<th>start</th>
+					<td>
+						<input id="bids-start" type="text" />
+					</td>
+				</tr>
+				<tr>
+					<th>end</th>
+					<td>
+						<input id="bids-end" type="text" />
+					</td>
+				</tr>
+			</table>
+			<h4>response</h4>
+			<code id="bidsStatus"></code>
+			<code id="bidsResponse"></code>
+		</form>
+	</section>
+	<section>
+		<h2>Friends</h2>
+		<form>
+			<h3>
+				<span>/api/users/me/auctions/:auctionId/friends?start=1&end=11</span>
+				<button type="button" onclick="friends()">GET</button>
+			</h3>
+			<table>
+				<tr>
+					<th>auctionId</th>
+					<td>
+						<input id="friends-auctionId" type="text" />
+					</td>
+				</tr>
+				<tr>
+					<th>start</th>
+					<td>
+						<input id="friends-start" type="text" />
+					</td>
+				</tr>
+				<tr>
+					<th>end</th>
+					<td>
+						<input id="friends-end" type="text" />
+					</td>
+				</tr>
+			</table>
+			<h4>response</h4>
+			<code id="friendsStatus"></code>
+			<code id="friendsResponse"></code>
+		</form>
+	</section>
+	<section>
+		<h2>Auctions</h2>
+		<form>
+			<h3>
+				<span>/api/auctions?start=1&end=11</span>
+				<button type="button" onclick="auctions()">GET</button>
+			</h3>
+			<table>
+				<tr>
+					<th>start</th>
+					<td>
+						<input id="auctions-start" type="text" />
+					</td>
+				</tr>
+				<tr>
+					<th>end</th>
+					<td>
+						<input id="auctions-end" type="text" />
+					</td>
+				</tr>
+			</table>
+			<h4>response</h4>
+			<code id="auctionsStatus"></code>
+			<code id="auctionsResponse"></code>
+		</form>
+	</section>
+	<section>
+		<h2>Auction</h2>
+		<form>
+			<h3>
+				<span>/api/auctions/:auctionId</span>
+				<button type="button" onclick="auction()">GET</button>
+			</h3>
+			<table>
+				<tr>
+					<th>auctionId</th>
+					<td>
+						<input id="auction-auctionId" type="text" />
+					</td>
+				</tr>
+			</table>
+			<h4>response</h4>
+			<code id="auctionStatus"></code>
+			<code id="auctionResponse"></code>
+		</form>
+	</section>
+	<section>
+		<h2>Ranking</h2>
+		<form>
+			<h3>
+				<span>/api/auctions/:auctionId/graltable?start=1&end=11</span>
+				<button type="button" onclick="graltable()">GET</button>
+			</h3>
+			<table>
+				<tr>
+					<th>auctionId</th>
+					<td>
+						<input id="graltable-auctionId" type="text" />
+					</td>
+				</tr>
+				<tr>
+					<th>start</th>
+					<td>
+						<input id="graltable-start" type="text" />
+					</td>
+				</tr>
+				<tr>
+					<th>end</th>
+					<td>
+						<input id="graltable-end" type="text" />
+					</td>
+				</tr>
+			</table>
+			<h4>response</h4>
+			<code id="graltableStatus"></code>
+			<code id="graltableResponse"></code>
+		</form>
+	</section>
+	<section>
+		<h2>Category</h2>
+		<form>
+			<h3>
+				<span>/api/auctions/category/:categoria</span>
+				<button type="button" onclick="category()">GET</button>
+			</h3>
+			<table>
+				<tr>
+					<th>categoria</th>
+					<td>
+						<input id="category-categoria" type="text" />
+					</td>
+				</tr>
+			</table>
+			<h4>response</h4>
+			<code id="categoryStatus"></code>
+			<code id="categoryResponse"></code>
+		</form>
+	</section>
+	<script>
+var xhttp = new XMLHttpRequest()
+var jwt = getQueryString('jwt')
+
+function getQueryString(name) {
+	name = name.replace(/[\[\]]/g, "\\$&")
+	var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)")
+	var	results = regex.exec(window.location.href)
+	if (!results) return null
+	if (!results[2]) return ''
+	return decodeURIComponent(results[2].replace(/\+/g, " "))
+}
+
+function usersPost() {
+	xhttp.open("POST", window.location.origin + "/api/users", true);
+	xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+	xhttp.onreadystatechange = function() {
+		if (xhttp.readyState == 4) {
+			document.getElementById("usersResponse").innerHTML = xhttp.responseText;
+			document.getElementById("usersStatus").innerHTML = xhttp.status;
+		}
+	}
+	var username = document.getElementById("users-username").value
+	var password = document.getElementById("users-password").value
+	var email = document.getElementById("users-email").value
+	xhttp.send("username=" + username + "&password=" + password+ "&email=" + email);
+}
+
+function emailVerificationGet() {
+	var username = document.getElementById("email-validation-username").value
+	var uuid = document.getElementById("email-validation-uuid").value
+	xhttp.open("GET", window.location.origin + "/api/users/" + username + "/email/" + uuid, true);
+	xhttp.onreadystatechange = function() {
+		if (xhttp.readyState == 4) {
+			document.getElementById("email-validation-response").innerHTML = xhttp.responseText;
+			document.getElementById("email-validation-status").innerHTML = xhttp.status;
+		}
+	}
+	xhttp.send();
+}
+
+function emailReVerificationPut() {
+	var username = document.getElementById("email-revalidation-username").value
+	var email = document.getElementById("email-revalidation-email").value
+	var uuid = document.getElementById("email-revalidation-uuid").value
+	var status = document.getElementById("userStatus-status").value
+	xhttp.open("PUT", window.location.origin + "/api/users/" + username + "/email/" + uuid, true);
+	xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+	xhttp.onreadystatechange = function() {
+		if (xhttp.readyState == 4) {
+			document.getElementById("email-revalidation-response").innerHTML = xhttp.responseText;
+			document.getElementById("email-revalidation-status").innerHTML = xhttp.status;
+		}
+	}
+	xhttp.send("username=" + username + "&email=" + email + '&uuid=' + uuid);
+}
+	
+function userStatusPUT() {
+	var username = document.getElementById("userStatus-username").value
+	var status = document.getElementById("userStatus-status").value
+	xhttp.open("PUT", window.location.origin + "/api/users/" + username + '/status/' + status, true)
+	xhttp.setRequestHeader("Authorization", "Bearer " + jwt)
+	xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded")
+	xhttp.onreadystatechange = function() {
+		if (xhttp.readyState == 4) {
+			document.getElementById("userStatusResponse").innerHTML = xhttp.responseText
+			document.getElementById("userStatusStatus").innerHTML = xhttp.status
+		}
+	}
+	xhttp.send();
+}
+
+function userPasswordPUT() {
+	var newPassword = document.getElementById("userPassword-newPassword").value
+	xhttp.open("PUT", window.location.origin + "/api/users/me/password", true)
+	xhttp.setRequestHeader("Authorization", "Bearer " + jwt)
+	xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded")
+	xhttp.onreadystatechange = function() {
+		if (xhttp.readyState == 4) {
+			document.getElementById("userPasswordResponse").innerHTML = xhttp.responseText
+			jwt = xhttp.responseText
+			document.getElementById("userPasswordStatus").innerHTML = xhttp.status
+		}
+	}
+	xhttp.send("password=" + newPassword);
+}
+
+function coins() {
+	xhttp.open("GET", window.location.origin + "/api/users/me/coins", true);
+	xhttp.setRequestHeader("Authorization", "Bearer " + jwt)
+	xhttp.onreadystatechange = function() {
+		if (xhttp.readyState == 4) {
+			document.getElementById("coinsStatus").innerHTML = xhttp.responseText;
+			document.getElementById("coinsResponse").innerHTML = xhttp.status;
+		}
+	}
+	xhttp.send();
+}
+
+function paquetes() {
+	xhttp.open("GET", window.location.origin + "/api/users/me/packages", true);
+	xhttp.setRequestHeader("Authorization", "Bearer " + jwt)
+	xhttp.onreadystatechange = function() {
+		if (xhttp.readyState == 4) {
+			document.getElementById("paquetesStatus").innerHTML = xhttp.responseText;
+			document.getElementById("paquetesResponse").innerHTML = xhttp.status;
+		}
+	}
+	xhttp.send();
+}
+
+function paquete() {
+	var packageId = document.getElementById("paquete-id").value
+	xhttp.open("GET", window.location.origin + "/api/users/me/packages/" + packageId, true);
+	xhttp.setRequestHeader("Authorization", "Bearer " + jwt)
+	xhttp.onreadystatechange = function() {
+		if (xhttp.readyState == 4) {
+			document.getElementById("paqueteStatus").innerHTML = xhttp.responseText;
+			document.getElementById("paqueteResponse").innerHTML = xhttp.status;
+		}
+	}
+	xhttp.send();
+}
+	
+function postBids() {
+	var auctionId = document.getElementById("postBids-auctionId").value
+	var amount = document.getElementById("postBids-amount").value
+	xhttp.open("POST", window.location.origin + "/api/users/me/auctions/" + auctionId + "/bids", true);
+	xhttp.setRequestHeader("Authorization", "Bearer " + jwt)
+	xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+	xhttp.onreadystatechange = function() {
+		if (xhttp.readyState == 4) {
+			document.getElementById("postBidsStatus").innerHTML = xhttp.responseText;
+			document.getElementById("postBidsResponse").innerHTML = xhttp.status;
+		}
+	}
+	xhttp.send("amount=" + amount);
+}
+
+function bids() {
+	var auctionId = document.getElementById("bids-auctionId").value
+	var start = document.getElementById("bids-start").value
+	var end = document.getElementById("bids-end").value
+	xhttp.open("GET", window.location.origin + "/api/users/me/auctions/" + auctionId + "/bids?start=" + start + "&end=" + end, true);
+	xhttp.setRequestHeader("Authorization", "Bearer " + jwt)
+	xhttp.onreadystatechange = function() {
+		if (xhttp.readyState == 4) {
+			document.getElementById("bidsStatus").innerHTML = xhttp.responseText;
+			document.getElementById("bidsResponse").innerHTML = xhttp.status;
+		}
+	}
+	xhttp.send();
+}
+
+function friends() {
+	var auctionId = document.getElementById("friends-auctionId").value
+	var start = document.getElementById("friends-start").value
+	var end = document.getElementById("friends-end").value
+	xhttp.open("GET", window.location.origin + "/api/users/me/auctions/" + auctionId + "/friends?start=" + start + "&end=" + end, true);
+	xhttp.setRequestHeader("Authorization", "Bearer " + jwt)
+	xhttp.onreadystatechange = function() {
+		if (xhttp.readyState == 4) {
+			document.getElementById("friendsStatus").innerHTML = xhttp.responseText;
+			document.getElementById("friendsResponse").innerHTML = xhttp.status;
+		}
+	}
+	xhttp.send();
+}
+
+function auctions() {
+	var start = document.getElementById("auctions-start").value
+	var end = document.getElementById("auctions-end").value
+	xhttp.open("GET", window.location.origin + "/api/auctions?start=" + start + "&end=" + end, true);
+	xhttp.onreadystatechange = function() {
+		if (xhttp.readyState == 4) {
+			document.getElementById("auctionsStatus").innerHTML = xhttp.responseText;
+			document.getElementById("auctionsResponse").innerHTML = xhttp.status;
+		}
+	}
+	xhttp.send();
+}
+
+function auction() {
+	var auctionId = document.getElementById("auction-auctionId").value
+	xhttp.open("GET", window.location.origin + "/api/auctions/" + auctionId, true);
+	xhttp.onreadystatechange = function() {
+		if (xhttp.readyState == 4) {
+			document.getElementById("auctionStatus").innerHTML = xhttp.responseText;
+			document.getElementById("auctionResponse").innerHTML = xhttp.status;
+		}
+	}
+	xhttp.send();
+}
+
+function graltable() {
+	var auctionId = document.getElementById("graltable-auctionId").value
+	var start = document.getElementById("graltable-start").value
+	var end = document.getElementById("graltable-end").value
+	xhttp.open("GET", window.location.origin + "/api/auctions/" + auctionId + "/graltable?start=" + start + "&end=" + end, true);
+	xhttp.onreadystatechange = function() {
+		if (xhttp.readyState == 4) {
+			document.getElementById("graltableStatus").innerHTML = xhttp.responseText;
+			document.getElementById("graltableResponse").innerHTML = xhttp.status;
+		}
+	}
+	xhttp.send();
+}
+
+function category() {
+	var categoria = document.getElementById("category-categoria").value
+	xhttp.open("GET", window.location.origin + "/api/auctions/category/" + categoria, true);
+	xhttp.onreadystatechange = function() {
+		if (xhttp.readyState == 4) {
+			document.getElementById("categoryStatus").innerHTML = xhttp.responseText;
+			document.getElementById("categoryResponse").innerHTML = xhttp.status;
+		}
+	}
+	xhttp.send();
+}
+	</script>
+</body>
+</html>

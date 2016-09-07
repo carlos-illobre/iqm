@@ -1,0 +1,27 @@
+{
+	"local" :{
+		"failureRedirect": "http://localhost:8080/login-failure.html",
+		"successRedirectTemplate": "http://localhost:8080?jwt={jwt}"
+	},
+	"googleplus": {
+		"clientID": "805552906220-0jl4q6eohmpark2m7fe7vhlk1v3kplo2.apps.googleusercontent.com",
+		"clientSecret": "LViMr9tfbvJBjFfnFwVJr0wU",
+		"callbackURL": "http://localhost:8080/auth/googleplus/callback",
+		"failureRedirect": "http://localhost:8080/login-failure.html",
+		"successRedirectTemplate": "http://localhost:8080?jwt={jwt}"
+	},
+	"facebook": {
+		"clientID": "590702051099169",
+		"clientSecret": "c9cb0160fa86fc94e79316f9da3d3b00",
+		"callbackURL": "http://localhost:8080/auth/facebook/callback",
+		"failureRedirect": "http://localhost:8080/login-failure.html",
+		"successRedirectTemplate": "http://localhost:8080?jwt={jwt}"
+	},
+	"twitter": {
+		"consumerKey": "jGHAmkyOHASrX16IFQgwUMVW1",
+		"consumerSecret": "p6lCoQkZyvgT5gcksbZ2pTXB09wnKLQjLuTxdhEeoKQbKQJcM1",
+		"callbackURL": "http://localhost:8080/auth/twitter/callback",
+		"failureRedirect": "http://localhost:8080/login-failure.html",
+		"successRedirectTemplate": "http://localhost:8080?jwt={jwt}"
+	}
+}
