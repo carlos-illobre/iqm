@@ -6,9 +6,7 @@
     "start": "node server.js",
     "debug": "node debug server.js",
     "test": "node ./node_modules/mocha/bin/mocha test/**/*.test.js",
-    "debug-test": "node ./node_modules/mocha/bin/mocha debug test/**/*.test.js",
-    "itest": "node ./node_modules/mocha/bin/mocha test/**/*.itest.js",
-    "debug-itest": "node ./node_modules/mocha/bin/mocha debug test/**/*.itest.js"
+    "debug-test": "node ./node_modules/mocha/bin/mocha debug test/**/*.test.js"
   },
   "dependencies": {
     "body-parser": "1.14.2",
